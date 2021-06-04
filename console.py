@@ -134,7 +134,6 @@ class HBNBCommand(cmd.Cmd):
         for k in res.keys():
             res[k] = res[k].replace("_", " ")
         res = str(res)
-        print(res)
         self.do_update(args[0] + ' ' + str(new_instance.id) + ' ' + res)
         print(new_instance.id)
         storage.save()
