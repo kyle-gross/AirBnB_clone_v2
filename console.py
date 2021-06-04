@@ -10,6 +10,7 @@ from models.state import State
 from models.city import City
 from models.amenity import Amenity
 from models.review import Review
+import shlex
 
 
 class HBNBCommand(cmd.Cmd):
@@ -123,14 +124,18 @@ class HBNBCommand(cmd.Cmd):
             print("** class doesn't exist **")
             return
         new_instance = HBNBCommand.classes[args[0]]()
+        storage.save()
         res = []
         for item in args[1:]:
             if '=' in item:
                 item = item.replace("\"", "")
                 res.append(map(str.strip, item.split('=', 1)))
-        res = str(dict(res))
+        res = dict(res)
+        for k in res.keys():
+            res[k] = res[k].replace("_", " ")
+        res = str(res)
+        print(res)
         self.do_update(args[0] + ' ' + str(new_instance.id) + ' ' + res)
-        storage.save()
         print(new_instance.id)
         storage.save()
 
