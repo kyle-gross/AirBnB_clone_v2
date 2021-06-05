@@ -125,7 +125,7 @@ class HBNBCommand(cmd.Cmd):
             return
         att_dict = {}
         new_instance = HBNBCommand.classes[args[0]]()
-        if '=' in args[1]:
+        if len(args) > 1 and '=' in args[1]:
             res = []
             for item in args[1:]:
                 if '=' in item:
@@ -136,8 +136,8 @@ class HBNBCommand(cmd.Cmd):
                 if "_" in att_dict[k]:
                     att_dict[k] = att_dict[k].replace("_", " ")
                 setattr(new_instance, k, v)
-            print(new_instance.id)
-            new_instance.save()
+        print(new_instance.id)
+        new_instance.save()
 
     def help_create(self):
         """ Help information for the create method """
@@ -229,7 +229,6 @@ class HBNBCommand(cmd.Cmd):
         else:
             for k, v in storage_dict.items():
                 print_list.append(str(v))
-
         print(print_list)
 
     def help_all(self):

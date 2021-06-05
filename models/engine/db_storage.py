@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 """Contains db_storage"""
+from models.place import Place
 from models.user import User
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy import create_engine
@@ -9,12 +10,13 @@ from models.base_model import Base
 from sqlalchemy.orm import scoped_session
 from models.state import State
 from models.city import City
+from models.place import Place
 
 
 
 class DBStorage():
     """DBStorage class"""
-    class_dic = {'State': State, 'City': City, 'User': User}
+    class_dic = {'State': State, 'City': City, 'User': User, 'Place': Place}
     #'Amenity', 'User', 'State', 'City', 'Review', 'Place'
 
     __engine = None
@@ -37,7 +39,7 @@ class DBStorage():
         dic = {}
         objects = []
         if cls is not None:
-            objects.extend(self.__session.query(self.classs_dic[cls.__name__]).all())
+            objects.extend(self.__session.query(self.class_dic[cls.__name__]).all())
         else:
             for clss in self.class_dic.values():
                 objects.extend(self.__session.query(clss).all())
