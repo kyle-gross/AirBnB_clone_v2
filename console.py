@@ -123,20 +123,21 @@ class HBNBCommand(cmd.Cmd):
         elif args[0] not in HBNBCommand.classes.keys():
             print("** class doesn't exist **")
             return
+        att_dict = {}
         new_instance = HBNBCommand.classes[args[0]]()
-        storage.save()
-        res = []
-        for item in args[1:]:
-            if '=' in item:
-                item = item.replace("\"", "")
-                res.append(map(str.strip, item.split('=', 1)))
-        res = dict(res)
-        for k in res.keys():
-            res[k] = res[k].replace("_", " ")
-        res = str(res)
-        self.do_update(args[0] + ' ' + str(new_instance.id) + ' ' + res)
-        print(new_instance.id)
-        storage.save()
+        if '=' in args[1]:
+            res = []
+            for item in args[1:]:
+                if '=' in item:
+                    item = item.replace("\"", "")
+                    res.append(map(str.strip, item.split('=', 1)))
+            att_dict = dict(res)
+            for k, v in att_dict.items():
+                if "_" in att_dict[k]:
+                    att_dict[k] = att_dict[k].replace("_", " ")
+                setattr(new_instance, k, v)
+            print(new_instance.id)
+            new_instance.save()
 
     def help_create(self):
         """ Help information for the create method """
@@ -328,7 +329,7 @@ class HBNBCommand(cmd.Cmd):
 
                 # update dictionary with name, value pair
                 new_dict.__dict__.update({att_name: att_val})
-
+        print(new_dict)
         new_dict.save()  # save updates to file
 
     def help_update(self):

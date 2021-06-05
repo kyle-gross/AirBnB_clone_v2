@@ -6,12 +6,14 @@ from sqlalchemy.orm.session import Session
 from os import environ
 from models.base_model import Base
 from sqlalchemy.orm import scoped_session
+from models.state import State
+from models.city import City
 
 
 
 class DBStorage():
     """DBStorage class"""
-    class_list = ['State']
+    class_dic = {'State': State, 'City': City}
     #'Amenity', 'User', 'State', 'City', 'Review', 'Place'
 
     __engine = None
@@ -31,22 +33,17 @@ class DBStorage():
 
     def all(self, cls=None):
         """All method queries databasse for all objects"""
-        dict = {}
+        dic = {}
+        objects = []
         if cls is not None:
-            objects = self.__session.query(cls.__name__)
-            for obj in objects:
-                str = cls.__name__ + '.' + obj.id
-                dict[str] = obj
+            objects.extend(self.__session.query(self.classs_dic[cls.__name__]).all())
         else:
-            try:
-                for clss in self.class_list:
-                    objects = self.__session.query(clss)
-                    for obj in objects:
-                        str = cls.__name__ + '.' + obj.id
-                        dict[str] = obj
-            except:
-                pass
-        return dict
+            for clss in self.class_dic.values():
+                objects.extend(self.__session.query(clss).all())
+        for item in objects:
+            st = type(item).__name__ + '.' + item.id
+            dic.update({st: item})
+        return dic
 
     def new(self, obj):
         """Adds object to current database session"""
