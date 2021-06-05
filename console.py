@@ -135,7 +135,7 @@ class HBNBCommand(cmd.Cmd):
             for k, v in att_dict.items():
                 if "_" in att_dict[k]:
                     att_dict[k] = att_dict[k].replace("_", " ")
-                setattr(new_instance, k, v)
+                setattr(new_instance, k, att_dict[k])
         print(new_instance.id)
         new_instance.save()
 
