@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 """Contains db_storage"""
+from models.review import Review
 from models.place import Place
 from models.user import User
 from sqlalchemy.orm import sessionmaker
@@ -16,8 +17,11 @@ from models.place import Place
 
 class DBStorage():
     """DBStorage class"""
-    class_dic = {'State': State, 'City': City, 'User': User, 'Place': Place}
-    #'Amenity', 'User', 'State', 'City', 'Review', 'Place'
+    class_dic = {'State': State,
+                 'City': City,
+                 'User': User,
+                 'Place': Place,
+                 'Review': Review}
 
     __engine = None
     __session = None
