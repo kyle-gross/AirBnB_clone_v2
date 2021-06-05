@@ -28,4 +28,3 @@ class TestConsole(unittest.TestCase):
             self.assertIn(state_id, fd.read())
 if __name__ == "__main__":
     unittest.main()
-        
