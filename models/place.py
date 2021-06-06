@@ -6,7 +6,13 @@ from models.base_model import Base, BaseModel
 from sqlalchemy import Column, Integer, String, Float
 from models.city import City
 from models.user import User
+from models import storage
 
+
+association_table = Table('place_amenity', Base.metadata,
+    Column('place_id', String(60), ForeignKey('places.id'), primary_key=True)
+    Column('amenities_id', String(60), ForeignKey('amenities.id'), primary_key=True)
+)
 
 class Place(BaseModel, Base):
     """ A place to stay """
@@ -24,3 +30,20 @@ class Place(BaseModel, Base):
     longitude = Column(Float)
     amenity_ids = []
     reviews = relationship("Review", backref="Place")
+    amenities = relationship("Amenity", secondary=association_table,
+                             viewonly=False)
+    @property
+    def amenities(self):
+        """returns list of amentity ids"""
+        return self.amenity_ids
+
+    @amenities.setter
+    def amenities(self, obj):
+        """appends to amenity_id list"""
+        self.amenity_id.append(obj)
+
+    @property
+    def reviews(self):
+        """returns list of revies with shared pace_ids"""
+        return self.reviews
+
