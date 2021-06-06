@@ -18,7 +18,8 @@ class DBStorage():
                  'City': City,
                  'User': User,
                  'Place': Place,
-                 'Review': Review}
+                 'Review': Review,
+                 'Amenity': Amenity}
 
     __engine = None
     __session = None
