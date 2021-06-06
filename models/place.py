@@ -3,15 +3,17 @@
 from sqlalchemy.orm import backref, relationship
 from sqlalchemy.sql.schema import ForeignKey
 from models.base_model import Base, BaseModel
-from sqlalchemy import Column, Integer, String, Float
+from sqlalchemy import Column, Integer, String, Float, Table
 from models.city import City
 from models.user import User
-from models import storage
+#from models import storage
 
 
 association_table = Table('place_amenity', Base.metadata,
-    Column('place_id', String(60), ForeignKey('places.id'), primary_key=True)
-    Column('amenities_id', String(60), ForeignKey('amenities.id'), primary_key=True)
+    Column('place_id', String(60),
+           ForeignKey('places.id'), primary_key=True),
+    Column('amenities_id', String(60),
+           ForeignKey('amenities.id'), primary_key=True)
 )
 
 class Place(BaseModel, Base):
@@ -30,7 +32,7 @@ class Place(BaseModel, Base):
     longitude = Column(Float)
     amenity_ids = []
     reviews = relationship("Review", backref="Place")
-    amenities = relationship("Amenity", secondary=association_table,
+    amenities = relationship("Amenity", secondary='place_amenity',
                              viewonly=False)
     @property
     def amenities(self):
