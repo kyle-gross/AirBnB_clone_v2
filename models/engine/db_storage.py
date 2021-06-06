@@ -3,16 +3,13 @@
 from models.review import Review
 from models.place import Place
 from models.user import User
-from sqlalchemy.orm import sessionmaker
-from sqlalchemy import create_engine
-from sqlalchemy.orm.session import Session
-from os import environ
-from models.base_model import Base
-from sqlalchemy.orm import scoped_session
 from models.state import State
 from models.city import City
 from models.place import Place
-
+from models.base_model import Base, BaseModel
+from models.amenity import Amenity
+from sqlalchemy import create_engine
+from os import environ
 
 
 class DBStorage():
@@ -66,13 +63,9 @@ class DBStorage():
 
     def reload(self):
         """Creates all tables in database"""
-        from models.base_model import BaseModel
-        from models.city import City
-        from models.state import State
-        from models.amenity import Amenity
-        from models.user import User
-        from models.review import Review
-        from models.place import Place
+        from sqlalchemy.orm import sessionmaker, scoped_session
+        from sqlalchemy.orm.session import Session
+
         Base.metadata.create_all(self.__engine)
         session_factory = sessionmaker(bind=self.__engine,
                                        expire_on_commit=False)
