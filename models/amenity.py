@@ -3,11 +3,11 @@
 from models.base_model import BaseModel, Base
 from sqlalchemy import Column, Integer, String
 from sqlalchemy.orm import relationship
-from models.place import association_table
+#from models.place import association_table
 
 
 class Amenity(BaseModel, Base):
     """Amenity class"""
     __tablename__ = "amenities"
     name = Column(String(128), nullable=False)
-    place_amenities = relationship("Place", secondary=association_table)
+    place_amenities = relationship("Place", secondary='place_amenity')
