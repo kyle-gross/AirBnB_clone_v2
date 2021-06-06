@@ -28,9 +28,9 @@ class Place(BaseModel, Base):
     latitude = Column(Float)
     longitude = Column(Float)
     amenity_ids = []
-    reviews = relationship("Review", backref="Place")
+    reviews = relationship("Review", backref="place")
     amenities = relationship("Amenity", secondary='place_amenity',
-                             viewonly=False, backref='place_amenities')
+                             viewonly=False, backref='place_amenity')
     @property
     def amenities(self):
         """returns list of amentity ids"""
