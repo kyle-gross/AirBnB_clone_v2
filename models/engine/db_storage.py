@@ -31,7 +31,7 @@ class DBStorage():
                                               environ.get('HBNB_MYSQL_PWD'),
                                               environ.get('HBNB_MYSQL_HOST'),
                                               environ.get('HBNB_MYSQL_DB')),
-                                       pool_pre_ping=True)
+                                      pool_pre_ping=True)
 
         if environ.get('HBNB_ENV') == 'test':
             Base.metadata.drop_all(bind=self.__engine)
@@ -41,7 +41,8 @@ class DBStorage():
         dic = {}
         objects = []
         if cls is not None:
-            objects.extend(self.__session.query(self.class_dic[cls.__name__]).all())
+            objects.extend(self.__session.query(
+                           self.class_dic[cls.__name__]).all())
         else:
             for clss in self.class_dic.values():
                 objects.extend(self.__session.query(clss).all())

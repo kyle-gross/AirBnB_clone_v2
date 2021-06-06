@@ -7,11 +7,13 @@ from sqlalchemy import Column, Integer, String, Float, Table
 
 
 place_amenity = Table('place_amenity', Base.metadata,
-    Column('place_id', String(60),
-           ForeignKey('places.id'), primary_key=True),
-    Column('amenity_id', String(60),
-           ForeignKey('amenities.id'), primary_key=True)
-)
+                      Column('place_id', String(60),
+                             ForeignKey('places.id'),
+                             primary_key=True),
+                      Column('amenity_id', String(60),
+                             ForeignKey('amenities.id'),
+                             primary_key=True))
+
 
 class Place(BaseModel, Base):
     """ A place to stay """
@@ -31,6 +33,7 @@ class Place(BaseModel, Base):
     reviews = relationship("Review", backref="place")
     amenities = relationship("Amenity", secondary='place_amenity',
                              viewonly=False, backref='place_amenities')
+
     @property
     def amenities(self):
         """returns list of amentity ids"""
@@ -45,4 +48,3 @@ class Place(BaseModel, Base):
     def reviews(self):
         """returns list of revies with shared pace_ids"""
         return self.reviews
-
