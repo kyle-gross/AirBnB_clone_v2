@@ -1,12 +1,9 @@
 #!/usr/bin/python3
 """ Place Module for HBNB project """
-from sqlalchemy.orm import backref, relationship
+from sqlalchemy.orm import relationship
 from sqlalchemy.sql.schema import ForeignKey
 from models.base_model import Base, BaseModel
 from sqlalchemy import Column, Integer, String, Float, Table
-from models.city import City
-from models.user import User
-#from models import storage
 
 
 association_table = Table('place_amenity', Base.metadata,
