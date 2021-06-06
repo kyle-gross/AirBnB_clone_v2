@@ -6,7 +6,7 @@ from models.base_model import Base, BaseModel
 from sqlalchemy import Column, Integer, String, Float, Table
 
 
-association_table = Table('place_amenity', Base.metadata,
+place_amenity = Table('place_amenity', Base.metadata,
     Column('place_id', String(60),
            ForeignKey('places.id'), primary_key=True),
     Column('amenities_id', String(60),
@@ -30,7 +30,7 @@ class Place(BaseModel, Base):
     amenity_ids = []
     reviews = relationship("Review", backref="Place")
     amenities = relationship("Amenity", secondary='place_amenity',
-                             viewonly=False)
+                             viewonly=False, backref='place_amenities')
     @property
     def amenities(self):
         """returns list of amentity ids"""
