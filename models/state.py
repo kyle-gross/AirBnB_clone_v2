@@ -20,5 +20,3 @@ class State(BaseModel, Base):
             if self.id == v.state_id:
                 lst.append(v)
         return lst
-
-
