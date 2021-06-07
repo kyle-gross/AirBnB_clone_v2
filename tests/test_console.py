@@ -27,5 +27,6 @@ class TestConsole(unittest.TestCase):
             state_id = f.getvalue()[:-1]
         with open(fs._FileStorage__file_path, 'r') as fd:
             self.assertIn(state_id, fd.read())
+
 if __name__ == "__main__":
     unittest.main()
