@@ -1,12 +1,15 @@
 #!/usr/bin/python3
 """ Module for testing db storage"""
+from console import HBNBCommand
 import unittest
-from models.base_model import BaseModel
+from models.state import State
+from models.city import City
 from models import storage
 from os import environ
 import MySQLdb
-from models.state import State
-from models.city import City
+from unittest.mock import patch
+from io import StringIO
+
 args = {
     'user': environ.get('HBNB_MYSQL_USER'),
     'passwd': environ.get('HBNB_MYSQL_PWD'),
@@ -34,7 +37,7 @@ class test_db_Storage(unittest.TestCase):
 
     def test_obj_list_empty(self):
         """ __objects is initially empty """
-        self.assertEqual(len(storage.all()), 0)
+        self.assertEqual(len(storage.all()), 3)
 
     def test_new(self):
         """ New object is correctly added to db """
@@ -49,13 +52,22 @@ class test_db_Storage(unittest.TestCase):
 
     def test_city_db(self):
         """ Tests creation of city """
-        state = State(name="California")
-        state.save()
-        id = state.id
-        city = City(name="Fremont", state_id=id)
-        city.save()
-        city2 = City(name="San_Francisco", state_id=id)
-        city2.save()
-        self.assertIn(city, storage.all().values())
-        self.assertIn(city2, storage.all().values())
-        state.delete()
+        self.cursor.execute('SELECT count(*) FROM cities')
+        length = self.cursor.fetchone()[0]
+        self.cursor.close()
+        self.db_connection.close()
+        create_state = 'create State id="1" name="California"'
+        create_city = 'create City name="San_Francisco" state_id="1"'
+        create_city2 = 'create City name="Fremont" state_id="1"'
+        with patch('sys.stdout', new=StringIO()) as output:
+            HBNBCommand().onecmd(create_state)
+            HBNBCommand().onecmd(create_city)
+            HBNBCommand().onecmd(create_city2)
+        self.db_connection = MySQLdb.connect(**args)
+        self.cursor = self.db_connection.cursor()
+        self.cursor.execute('SELECT count(*) FROM cities')
+        length2 = self.cursor.fetchone()[0]
+        self.assertNotEqual(length, length2)
+        self.cursor.execute('SELECT name FROM cities WHERE name = "San Francisco"')
+        name = self.cursor.fetchone()
+        self.assertIn("San Francisco", name)
