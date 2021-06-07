@@ -6,6 +6,7 @@ from models import storage
 import os
 from os import environ
 
+@unittest.skipIf(environ.get('HBNB_TYPE_STORAGE') == 'db', "Not db")
 class test_fileStorage(unittest.TestCase):
     """ Class to test the file storage method """
 
@@ -28,7 +29,6 @@ class test_fileStorage(unittest.TestCase):
         """ __objects is initially empty """
         self.assertEqual(len(storage.all()), 0)
 
-    @unittest.skipIf(environ.get('HBNB_TYPE_STORAGE') == 'db', "")
     def test_new(self):
         """ New object is correctly added to __objects """
         new = BaseModel()
