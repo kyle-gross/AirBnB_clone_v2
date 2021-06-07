@@ -53,3 +53,5 @@ class test_db_Storage(unittest.TestCase):
         id = state.id
         city = City(name="Fremont", state_id=id)
         city2 = City(name="San_Francisco", state_id=id)
+        self.assertIn(city, storage.all().values())
+        self.assertIn(city, storage.all().values())
