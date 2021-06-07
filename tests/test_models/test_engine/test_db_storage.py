@@ -50,6 +50,12 @@ class test_db_Storage(unittest.TestCase):
     def test_city_db(self):
         """ Tests creation of city """
         state = State(name="California")
+        state.save()
         id = state.id
         city = City(name="Fremont", state_id=id)
+        city.save()
         city2 = City(name="San_Francisco", state_id=id)
+        city2.save()
+        self.assertIn(city, storage.all().values())
+        self.assertIn(city2, storage.all().values())
+        state.delete()
