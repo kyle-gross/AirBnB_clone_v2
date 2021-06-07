@@ -37,7 +37,7 @@ class test_db_Storage(unittest.TestCase):
 
     def test_obj_list_empty(self):
         """ __objects is initially empty """
-        self.assertEqual(len(storage.all()), 3)
+        self.assertEqual(len(storage.all()), 2)
 
     def test_new(self):
         """ New object is correctly added to db """
@@ -56,18 +56,22 @@ class test_db_Storage(unittest.TestCase):
         length = self.cursor.fetchone()[0]
         self.cursor.close()
         self.db_connection.close()
-        create_state = 'create State id="1" name="California"'
+        self.db_connection = MySQLdb.connect(**args)
+        self.cursor = self.db_connection.cursor()
+        create_state = 'create State name="California" id="1"'
+        # self.cursor.execute('SELECT id FROM states WHERE name = "California"')
+        # stateid = self.cursor.fetchall()
+        # self.cursor.close()
+        # self.db_connection.close()
         create_city = 'create City name="San_Francisco" state_id="1"'
-        create_city2 = 'create City name="Fremont" state_id="1"'
         with patch('sys.stdout', new=StringIO()) as output:
             HBNBCommand().onecmd(create_state)
             HBNBCommand().onecmd(create_city)
-            HBNBCommand().onecmd(create_city2)
         self.db_connection = MySQLdb.connect(**args)
         self.cursor = self.db_connection.cursor()
         self.cursor.execute('SELECT count(*) FROM cities')
         length2 = self.cursor.fetchone()[0]
-        self.assertNotEqual(length, length2)
+        self.assertEqual(length2, length + 1)
         self.cursor.execute('SELECT name FROM cities WHERE name = "San Francisco"')
         name = self.cursor.fetchone()
         self.assertIn("San Francisco", name)
