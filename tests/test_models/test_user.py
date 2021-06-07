@@ -17,13 +17,12 @@ class test_User(test_basemodel):
 
     def test_first_name(self):
         """ """
-        new = self.value(first_name="Jerry")
+        new = self.value(first_name="Larry")
         self.assertEqual(type(new.first_name), str)
 
-    # @unittest.skipIf(environ.get('HBNB_TYPE_STORAGE') == 'db', "")
     def test_last_name(self):
         """ """
-        new = self.value(last_name="Garcia")
+        new = self.value(last_name="Bird")
         self.assertEqual(type(new.last_name), str)
 
     def test_email(self):

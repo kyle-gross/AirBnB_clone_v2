@@ -18,6 +18,7 @@ fs = FileStorage()
 class TestConsole(unittest.TestCase):
     """A unittesting class for console"""
 
+    @unittest.skipIf(os.environ.get('HBNB_TYPE_STORAGE') == 'db', "Not db")
     def test_create(self):
         if os.path.exists(fs._FileStorage__file_path):
             os.remove(fs._FileStorage__file_path)
