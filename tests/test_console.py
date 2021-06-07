@@ -1,7 +1,5 @@
 #!/usr/bin/python3
 """console testing module"""
-
-
 from io import StringIO
 import sys
 import unittest
