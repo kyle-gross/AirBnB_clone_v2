@@ -7,6 +7,7 @@ from datetime import datetime
 import os.path
 
 env.hosts = ["54.242.225.135", "3.92.27.64"]
+env.passwords = ["holbertonschoolwifiaccess"]
 
 
 def do_deploy(archive_path):
