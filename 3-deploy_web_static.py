@@ -18,6 +18,7 @@ def deploy(archive_path):
     else:
         return False
 
+
 def do_deploy(archive_path):
     """deploys contetnt to servers"""
     if not os.path.exists(archive_path):
