@@ -2,12 +2,11 @@
 """first fabric script"""
 
 
-from fabric.api import local, run, put, env
+from fabric.api import local, run, put
 from datetime import datetime
 
 def do_pack():
     """stuff"""
-    env.abort_exception = FabricException
     time = datetime.now()
     arch_name = "web_static" + time.strftime("%Y:%M:%d:%H:%M:%S") + ".tgz"
     v_path = "versions/" + arch_name
@@ -16,5 +15,5 @@ def do_pack():
         local("mkdir -p versions")
         local(tzg)
         return v_path
-    except FabricException:
+    except:
         return None
