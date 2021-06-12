@@ -1,43 +1,55 @@
 #!/usr/bin/python3
-"""first fabric script  """
-
-
-from fabric.api import local, run, put, env
+"""This module generates a .tgz file from web_static"""
+from fabric.api import local, put, run, env
 from datetime import datetime
 import os.path
 
-env.hosts = ["54.242.225.135", "3.92.27.64"]
+env.hosts = ['18.212.78.36', '54.196.233.122']
 
 
 def do_deploy(archive_path):
-    """deploys contetnt to servers"""
+    """Deploys the archive"""
     if not os.path.exists(archive_path):
         return False
+
     try:
-        path_file = archive_path[9:]
-        path_file_no_extension = path_file[:-4]
-        new_dir = "/data/web_static/releases/" + path_file_no_extension + "/"
-        put(archive_path, "/tmp/" + path_file)
-        run("mkdir -p " + new_dir)
-        run("tar -xzvf /tmp/" + path_file + " -C " +
-            new_dir + " --strip-components=1")
-        run("rm -rf /tmp/" + path_file)
-        run("rm -rf /data/web_static/current")
-        run("sudo ln -sf " + new_dir + " /data/web_static/current")
+        archive_name = archive_path[9:]
+        archive_name_no_extension = archive_name[:-4]
+
+        put(archive_path, '/tmp/' + archive_name)
+        run('mkdir -p /data/web_static/releases/' + archive_name_no_extension)
+        run('tar -xzvf /tmp/' +
+            archive_name +
+            ' -C ' +
+            '/data/web_static/releases/' +
+            archive_name_no_extension +
+            ' --strip-components=1')
+        run('rm -rf /tmp/' + archive_name)
+        run('rm -rf /data/web_static/current')
+        run('sudo ln -sf /data/web_static/releases/' +
+            archive_name_no_extension +
+            ' /data/web_static/current')
+
         return True
+
     except:
         return False
 
 
 def do_pack():
-    """stuff"""
-    time = datetime.now()
-    arch_name = "web_static_" + time.strftime("%Y%M%d%H%M%S") + ".tgz"
-    v_path = "versions/" + arch_name
-    tzg = "tar -cvzf " + v_path + " web_static"
+    """This function packs up all files from web_static"""
     try:
+        now = datetime.now()
+
+        tar_archive_name = "web_static_" +\
+                           now.strftime("%Y%m%d%H%M%S") + ".tgz"
+        tar_archive_path = "versions/" + tar_archive_name
+
         local("mkdir -p versions")
-        local(tzg)
-        return v_path
+
+        local("tar -czvf " + tar_archive_path + " web_static")
+
+        return tar_archive_path
+
     except:
         return None
