@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""first fabric script """
+"""first fabric script  """
 
 
 from fabric.api import local, run, put, env
@@ -21,9 +21,7 @@ def do_deploy(archive_path):
         run("mkdir -p " + new_dir)
         run("tar -xzvf /tmp/" + path_file + " -C " +
             new_dir + " --strip-components=1")
-        run("rm -f /tmp/" + path_file)
-        run("mv " + new_dir + "web_static/* " + new_dir)
-        run("rm -rf " + new_dir + "web_static")
+        run("rm -rf /tmp/" + path_file)
         run("rm -rf /data/web_static/current")
         run("sudo ln -sf " + new_dir + " /data/web_static/current")
         return True
