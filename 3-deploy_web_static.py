@@ -9,7 +9,7 @@ import os.path
 env.hosts = ["54.242.225.135", "3.92.27.64"]
 
 
-def deploy(archive_path):
+def deploy():
     """deploys archive"""
     archive = do_pack()
     if archive is not None:
