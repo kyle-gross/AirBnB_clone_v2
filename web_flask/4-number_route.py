@@ -31,7 +31,7 @@ def func3(text='is cool'):
     return 'Python %s' % text.replace('_', ' ')
 
 
-@hbnb.route('number/<int:n>')
+@hbnb.route('/number/<int:n>')
 def func4(n):
     """Determines if <n> is a number"""
     return '%i is a number' % n
