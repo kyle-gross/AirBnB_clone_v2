@@ -21,7 +21,7 @@ def func1():
 @hbnb.route('/c/<text>')
 def func2(text):
     """Displays 'C <text>'"""
-    return 'C %s' % text
+    return 'C %s' % text.replace('_', ' ')
 
 
 if __name__ == '__main__':
