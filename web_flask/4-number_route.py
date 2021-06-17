@@ -33,7 +33,7 @@ def func3(text='is cool'):
 
 @hbnb.route('number/<int:n>')
 def func4(n):
-    """Determines if <n> is a number!!!!"""
+    """Determines if <n> is a number"""
     return '%i is a number' % n
 
 
