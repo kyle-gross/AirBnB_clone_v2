@@ -23,5 +23,6 @@ def func2(text):
     """Displays 'C <text>'"""
     return 'C %s' % text
 
+
 if __name__ == '__main__':
     hbnb.run(debug=True, host='0.0.0.0')
