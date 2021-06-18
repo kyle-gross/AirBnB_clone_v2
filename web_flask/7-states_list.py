@@ -1,7 +1,6 @@
 #!/usr/bin/python3
 """This script starts a Flask web application"""
-from flask import Flask
-from flask import render_template
+from flask import Flask, g, render_template
 from models import storage
 
 app = Flask(__name__)
@@ -16,7 +15,7 @@ def states_list():
 
 
 @app.teardown_appcontext
-def tear_down(error):
+def teardown(error):
     if hasattr(g, 'storage')
         storage.close()
 
