@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<HTML lang="en">
+    <HEAD>
+        <TITLE>HBNB</TITLE>
+    </HEAD>
+    <BODY>
+        <H1>States</H1>
+        <ul id="State">
+        {% for st in State %}
+            <li><a href="{{ st.href }}">{{ st.caption }}</a></li>
+        {% endfor %}
+        </ul>
+    </BODY>
+</HTML>
