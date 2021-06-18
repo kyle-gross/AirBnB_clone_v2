@@ -11,12 +11,13 @@ class State(BaseModel, Base):
     name = Column(String(128), nullable=False)
     cities = relationship("City", backref="state")
 
-    @property
-    def cities(self):
-        """Getter for cities"""
-        from models import storage
-        lst = []
-        for k, v in storage.all(City):
-            if self.id == v.state_id:
-                lst.append(v)
-        return lst
+    if HBNB_TYPE_STORAGE != 'db':
+        @property
+        def cities(self):
+            """Getter for cities"""
+            from models import storage
+            lst = []
+            for k, v in storage.all(City):
+                if self.id == v.state_id:
+                    lst.append(v)
+            return lst
