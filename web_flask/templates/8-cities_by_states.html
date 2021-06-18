@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<HTML lang="en">
+    <HEAD>
+        <TITLE>HBNB</TITLE>
+    </HEAD>
+    <BODY>
+        <H1>States</H1>
+        <UL>
+        {% for st in State %}
+            <LI>"{{ st.id|e }}: "<B>"{{ st.name|e }}"</B></LI>
+            <UL>
+            {% for ct in City %}
+                <LI>"{{ ct.id|e }}: "<B>"{{ ct.name|e }}"</B></LI>
+            {% endfor %}
+            </UL>
+        {% endfor %}
+        </UL>
+    </BODY>
+</HTML>
