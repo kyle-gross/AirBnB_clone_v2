@@ -40,6 +40,12 @@ class FileStorage:
                 temp[key] = val.to_dict()
             json.dump(temp, f)
 
+
+    def close(self):
+        """Deserialize JSON file to objects"""
+        self.reload()
+
+
     def reload(self):
         """Loads storage dictionary from file"""
         from models.base_model import BaseModel

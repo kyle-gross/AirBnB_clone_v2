@@ -63,6 +63,12 @@ class DBStorage():
         """Deletes and object from current database session"""
         self.__session.delete(obj)
 
+
+    def close(self):
+        """Call remove() method on private session attirbute"""
+        self.__session.remove()
+
+
     def reload(self):
         """Creates all tables in database"""
         from sqlalchemy.orm import sessionmaker, scoped_session
