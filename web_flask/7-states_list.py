@@ -16,8 +16,9 @@ def states_list():
 
 
 @app.teardown_appcontext
-def tear_down():
-    storage.close()
+def tear_down(error):
+    if hasattr(g, 'storage')
+        storage.close()
 
 
 if __name__ == '__main__':
