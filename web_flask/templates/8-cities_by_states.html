@@ -6,15 +6,17 @@
     <BODY>
         <H1>States</H1>
         <UL>
-        {% for st in State %}
+            {% for st in state %}
             <LI>"{{ st.id|e }}: "<B>"{{ st.name|e }}"</B>
                 <UL>
-                {% for ct in City %}
-                    <LI>"{{ ct.id|e }}: "<B>"{{ ct.name }}"</B></LI>
-                {% endfor %}
+                    {% for ct in city %}
+                        {% if ct.state_id == st.id %}
+                    <LI>{{ ct.id|e }}: <B>{{ ct.name|e }}</B></LI>
+                        {% endif %}
+                    {% endfor %}
                 </UL>
             </LI>
-        {% endfor %}
+            {% endfor %}
         </UL>
     </BODY>
 </HTML>

@@ -18,8 +18,8 @@ def city_list():
     city_dict = storage.all(City)
     sorted_city = sorted(city_dict.values(), key=lambda x: x.name)
     # Render template with 2 sorted dicts
-    return render_template('7-states_list.html', State=sorted_dict,
-                           City=sorted_city)
+    return render_template('8-cities_by_states.html', state=sorted_dict,
+                           city=sorted_city)
 
 
 @app.teardown_appcontext
