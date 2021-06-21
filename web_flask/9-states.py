@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """This script starts a Flask web application"""
 from models.city import City
-from flask import Flask, render_template
+from flask import abort, Flask, render_template
 from models import storage
 from models.state import State
 
@@ -28,11 +28,13 @@ def city_list(id=0):
         # Render template with 2 sorted dicts
         return render_template('9-states.html', state=new_dict,
                                city=sorted_city, id=0)
-    else:
+    if id == 0:
         sorted_dict = sorted(state_dict.values(), key=lambda x: x.name)
         return render_template('9-states.html', state=sorted_dict,
                                city=None, id=1)
-        
+
+    else:
+        abort(404)
 
 
 @app.teardown_appcontext
