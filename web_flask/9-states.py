@@ -25,7 +25,7 @@ def city_list(id=0):
         # Create sorted City dict
         city_dict = storage.all(City)
         sorted_city = sorted(city_dict.values(), key=lambda x: x.name)
-        # Render template with 2 sorted dicts
+        # Render template with 1 sorted dict and 1 state only dict
         return render_template('9-states.html', state=new_dict,
                                city=sorted_city, id=0)
     if id == 0:
@@ -34,7 +34,8 @@ def city_list(id=0):
                                city=None, id=1)
 
     else:
-        abort(404)
+        return render_template('9-states.html', state=None,
+                               city=None, id=2)
 
 
 @app.teardown_appcontext

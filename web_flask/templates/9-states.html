@@ -14,13 +14,15 @@
                     {% endif %}
                 {% endfor %}
             </UL>
-        {% else %}
+        {% elif id == 1 %}
         <H1>States</H1>
         <UL>
             {% for st in state %}
                 <LI>{{ st.id|e }}: <B>{{ st.name|e }}</B></LI>
             {% endfor %}
         </UL>
+        {% else %}
+        <H1>Not found</H1>
         {% endif %}
     </BODY>
 </HTML>
