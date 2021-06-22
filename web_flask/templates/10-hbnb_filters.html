@@ -3,12 +3,12 @@
 	<head>
 		<title>AirBnB clone</title>
 
-		<link rel="shortcut icon" href="images/icon.ico" >
+		<link rel="shortcut icon" href="static/images/icon.ico" >
 
-		<link rel="stylesheet" href="styles/4-common.css"/>
-		<link rel="stylesheet" href="styles/3-header.css"/>
-		<link rel="stylesheet" href="styles/3-footer.css"/>
-		<link rel="stylesheet" href="styles/6-filters.css"/>
+		<link rel="stylesheet" href="static/styles/4-common.css"/>
+		<link rel="stylesheet" href="static/styles/3-header.css"/>
+		<link rel="stylesheet" href="static/styles/3-footer.css"/>
+		<link rel="stylesheet" href="static/styles/6-filters.css"/>
 	</head>
     <body>
 		<header>
@@ -24,7 +24,9 @@
 						<li><B>{{ st.name|e }}</B>
                             <ul>
                                 {% for ct in city %}
-                                <li><p>{{ ct.name }}</p></li>
+                                {% if ct.state_id == st.id %}
+                                <li><p>{{ ct.name|e }}</p></li>
+                                {% endif %}
                                 {% endfor %}
                             </ul>
                         </li>

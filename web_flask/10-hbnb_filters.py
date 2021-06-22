@@ -19,7 +19,7 @@ def city_list():
     amenity_dict = storage.all(Amenity)
     sorted_amenity = sorted(amenity_dict.values(), key=lambda x: x.name)
     return render_template('10-hbnb_filters.html', state=sorted_dict,
-                           city=sorted_city, amenity=sorted_amenity)
+                           city=sorted_city, amenities=sorted_amenity)
 
 
 @app.teardown_appcontext
